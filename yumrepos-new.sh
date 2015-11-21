@@ -2,7 +2,7 @@
 #
 # Creates Yum repos for the ERS Backend
 #
-# */5 * * * *    /usr/local/sbin/yumrepos-new.sh se-evd>> /var/log/yumrepos-se-evd.log 2>&1
+# */5 * * * *    /usr/local/sbin/yumrepos-new.sh <group_id> >> /var/log/yumrepos-<group_id>.log 2>&1
 #
 # $Id$
 # 
@@ -30,7 +30,7 @@ yum_repo_path=/var/www/html/${raw_name}/${artifact_id}
 cachedir=/var/cache/$name
 nexus_url=http://nexus:8081/nexus
 nexus_repos="releases snapshots"
-group_id=com.seamless.customer.${raw_name}
+group_id=com.<some_company>.customer.${raw_name}
 
 # logs to logfile and on console
 function log (){
@@ -132,39 +132,39 @@ for v in $versions; do
 
 
 # Try to find using locate first
-# Then try to find in com/seamless
-# Then try to find in se/seamless
+# Then try to find in com/<some_company>
+# Then try to find in se/<some_company>
 
 			echo "Searching for $_pkg in repo $repo"
 
 			if [ "$packageLinked" == "false" ];then
 					echo "Looking For $_pkg "
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch})
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch})
 					echo "Packages found are $packages"
 
 					if [ "$packages" == "" ]; then
-					echo "Packages not found in com/seamless we will try looking in se/seamless"
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch})
+					echo "Packages not found in com/<some_company> we will try looking in se/<some_company>"
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch})
 					fi
 
 					if [ "$packages" == "" ]; then
-					echo "Packages not found in se/seamless we will try with ${arch386} architecture"
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch386})
+					echo "Packages not found in se/<some_company> we will try with ${arch386} architecture"
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch386})
 					fi
 
 					if [ "$packages" == "" ]; then
-					echo "Packages not found in com/seamless we will try looking in se/seamless with ${arch386} architecture"
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch386})
+					echo "Packages not found in com/<some_company> we will try looking in se/<some_company> with ${arch386} architecture"
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch386})
 					fi
 
 					if [ "$packages" == "" ]; then
-					echo "Packages not found in se/seamless we will try with ${arch86} architecture"
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch86})
+					echo "Packages not found in se/<some_company> we will try with ${arch86} architecture"
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/com/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch86})
 					fi
 
 					if [ "$packages" == "" ]; then
-					echo "Packages not found in com/seamless we will try looking in se/seamless with ${arch86} architecture"
-					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/seamless/ -type f -name "${_pkg}*.rpm" | grep -E ${arch86})
+					echo "Packages not found in com/<some_company> we will try looking in se/<some_company> with ${arch86} architecture"
+					packages=$(find /opt/sonatype-work/nexus/storage/${repo}/se/<some_company>/ -type f -name "${_pkg}*.rpm" | grep -E ${arch86})
 					fi
 				fi
 
