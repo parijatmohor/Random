@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Creates Yum repos for the ERS Backend
+# Creates Yum repos
 #
 # */5 * * * *    /usr/local/sbin/yumrepos-new.sh <group_id> >> /var/log/yumrepos-<group_id>.log 2>&1
 #
